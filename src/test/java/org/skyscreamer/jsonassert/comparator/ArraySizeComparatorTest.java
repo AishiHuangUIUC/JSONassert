@@ -71,6 +71,36 @@ public class ArraySizeComparatorTest {
 	}
 
 	@Test
+//	when objects are simply given two array
+	public void succeedsWhenTwoArrayIncluded() throws JSONException {
+		doTest("{a:[2,3]}", twoElementArray);
+	}
+
+	@Test
+//	when comparing two array in object
+	public void succeedsWhenTwoArrayCompared() throws JSONException {
+		doTest("{a:[3,5]}", twoElementArray);
+	}
+
+	@Test
+//	when objects are simply given two array
+	public void succeedsWhenTwoArray() throws JSONException {
+		doTest("{a:[1,4]}", twoElementArray);
+	}
+
+	@Test
+//	when object fields are not simply arrays
+	public void failsWhenExpectedNotArrayTypes() throws JSONException {
+		doFailingMatchTest("{a:[{y;z:1},{y;z:1}]}", twoElementArray, "a\\[\\]: invalid expectation: minimum expected array size '\\{\"y\":1\\}' not a number");
+	}
+
+	@Test
+//	when not all object fields are arrays
+	public void failsWhenExpectedNotAllFieldsArray() throws JSONException {
+		doFailingMatchTest("{a:[{y;z:1},3]}", twoElementArray, "a\\[\\]: invalid expectation: minimum expected array size '\\{\"y\":1\\}' not a number");
+	}
+
+	@Test
 	public void failsWhenExpectedArrayTooShort() throws JSONException {
 		doFailingMatchTest("{a:[]}", twoElementArray, "a\\[\\]: invalid expectation: expected array should contain either 1 or 2 elements but contains 0 elements");
 	}
